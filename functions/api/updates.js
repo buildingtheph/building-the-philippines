@@ -6,7 +6,7 @@
  * newest first. The NOTION_TOKEN env var is never exposed to the browser.
  */
 
-const DATABASE_ID = 'bf1f70f0-6c5d-4b5a-9b7c-c9a40ef85f67';
+const DATABASE_ID = '36594e32-0512-4a2b-9db1-82ba811f3cb5';
 
 export async function onRequest(context) {
   const token = context.env.NOTION_TOKEN;
