@@ -84,8 +84,9 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 .crumbs.head-crumbs { display: none; font-size: 0.82rem; }
 .in-project .crumbs.head-crumbs { display: flex; }
 .in-project .brandline { align-items: center; }
-.subnav { border-bottom: 1px solid var(--rule); }
-.subnav button { font-size: 0.8rem; padding: 8px 12px; }
+.subnav { border-bottom: 0; }
+.subnav button { font-size: 0.8rem; padding: 4px 12px; }
+.subnav button:last-child { padding-right: 0; }
 
 button:focus-visible, a:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
 
@@ -122,9 +123,9 @@ a:hover { text-decoration-color: var(--seal); }
 /* project header */
 .crumbs { font-size: 0.78rem; color: var(--ink-soft); display: flex; gap: 6px; flex-wrap: wrap; }
 .crumbs button { appearance: none; background: none; border: 0; padding: 0; font: inherit; color: var(--ink-soft); cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
-.proj-head { display: flex; flex-direction: column; gap: 4px; }
 .proj-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4vw, 1.9rem); line-height: 1.15; }
-.project-top { display: flex; flex-direction: column; gap: 18px; margin-bottom: 30px; }
+.project-top { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+.proj-meta-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; }
 
 /* introduction: quote + videos */
 .quote { display: flex; flex-direction: column; gap: 14px; padding-block: 8px 4px; }
@@ -208,7 +209,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
     <div class="brandline">
       <button type="button" class="brand" data-go="projects">Building the Philippines</button>
       <span class="brand-sub">Updates on the country's major projects</span>
-      <div class="crumbs head-crumbs"><button type="button" data-go="projects">Projects</button><span aria-hidden="true">›</span><span>Pax Silica</span></div>
+      <div class="crumbs head-crumbs"><button type="button" data-go="projects">Projects</button><span aria-hidden="true">›</span><button type="button" data-project="pax-silica">Pax Silica</button></div>
       <span class="spacer"></span>
       <button type="button" id="theme-btn" class="theme-btn">Light</button>
     </div>
@@ -244,16 +245,15 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
     <!-- PROJECT: PAX SILICA -->
     <section id="view-project" hidden>
       <div class="project-top">
-        <div class="proj-head">
-          <span class="proj-title">Pax Silica</span>
+        <span class="proj-title">Pax Silica</span>
+        <div class="proj-meta-row">
           <span class="proj-place">New Clark City, Tarlac</span>
+          <nav class="tabs subnav" aria-label="Pax Silica pages">
+            <button type="button" data-tab="where" aria-selected="false">Where We Are</button>
+            <button type="button" data-tab="updates" aria-selected="false">Latest Updates</button>
+            <button type="button" data-tab="map" aria-selected="false">Map</button>
+          </nav>
         </div>
-        <nav class="tabs subnav" aria-label="Pax Silica pages">
-          <button type="button" data-tab="overview" aria-selected="true">Introduction</button>
-          <button type="button" data-tab="where" aria-selected="false">Where We Are</button>
-          <button type="button" data-tab="updates" aria-selected="false">Latest Updates</button>
-          <button type="button" data-tab="map" aria-selected="false">Map</button>
-        </nav>
       </div>
 
       <!-- Introduction -->
