@@ -448,7 +448,20 @@ function start(saved) {
   var views = ['projects', 'project', 'about', 'sources'];
   var tabs = ['overview', 'where', 'updates', 'map'];
   var tabPath = { overview: '', where: '/where-we-are', updates: '/latest-updates', map: '/map' };
-  var state = (saved && saved.view) ? { view: saved.view, tab: saved.tab || 'overview' } : { view: 'projects', tab: 'overview' };
+  function parseHash() {
+    var h = (location.hash || '').replace(/^#\/?/, '');
+    if (!h) return null;
+    if (h === 'about') return { view: 'about', tab: 'overview' };
+    if (h === 'sources') return { view: 'sources', tab: 'overview' };
+    if (h.indexOf('pax-silica') === 0) {
+      var seg = h.slice('pax-silica'.length).replace(/^\//, '');
+      var tabMap = { '': 'overview', 'where-we-are': 'where', 'latest-updates': 'updates', 'map': 'map' };
+      return { view: 'project', tab: tabMap[seg] || 'overview' };
+    }
+    return null;
+  }
+  var fromHash = parseHash();
+  var state = fromHash || ((saved && saved.view) ? { view: saved.view, tab: saved.tab || 'overview' } : { view: 'projects', tab: 'overview' });
   try { if (window.claude && window.claude.hot && window.claude.hot.snapshot) { window.claude.hot.snapshot(function () { return state; }); } } catch (e) {}
 
   function render() {
@@ -473,7 +486,18 @@ function start(saved) {
     window.scrollTo(0, 0);
   }
 
-  function go(view, tab) { state.view = view; if (tab) { state.tab = tab; } render(); }
+  function stateToHash(v, t) {
+    if (v === 'project') return '#pax-silica' + tabPath[t || 'overview'];
+    if (v === 'about') return '#about';
+    if (v === 'sources') return '#sources';
+    return location.pathname;
+  }
+  function go(view, tab) {
+    state.view = view;
+    if (tab) { state.tab = tab; }
+    render();
+    history.pushState({ view: state.view, tab: state.tab }, '', stateToHash(state.view, state.tab));
+  }
 
   // ── Latest Updates live feed ───────────────────────────────────────────────
   var updatesLoaded = false;
@@ -551,6 +575,17 @@ function start(saved) {
   });
 
   render();
+  if (state.view === 'project' && state.tab === 'updates') { loadUpdates(); }
+  history.replaceState({ view: state.view, tab: state.tab }, '', stateToHash(state.view, state.tab));
+
+  window.addEventListener('popstate', function (e) {
+    var s = (e.state && e.state.view) ? e.state : parseHash();
+    if (!s) { s = { view: 'projects', tab: 'overview' }; }
+    state.view = s.view;
+    state.tab = s.tab || 'overview';
+    render();
+    if (state.view === 'project' && state.tab === 'updates') { loadUpdates(); }
+  });
 
   var root = document.documentElement;
   var btn = document.getElementById('theme-btn');
