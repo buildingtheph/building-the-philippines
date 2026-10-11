@@ -81,7 +81,15 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 .site-nav { margin-top: 20px; }
 .in-project .site-nav, .in-project .brand-sub { display: none; }
 .in-project .masthead { padding-block: 20px 16px; }
-.crumbs.head-crumbs { display: none; font-size: 0.82rem; }
+.crumbs.head-crumbs { display: none; font-size: 0.82rem; align-items: center; }
+.proj-menu-wrap { position: relative; display: inline-flex; align-items: center; }
+.crumbs .proj-menu-btn { appearance: none; background: none; border: 0; padding: 2px; color: var(--ink-soft); cursor: pointer; display: inline-flex; align-items: center; text-decoration: none; }
+.crumbs .proj-menu-btn:hover { color: var(--ink); }
+.crumbs .proj-menu-btn svg { width: 10px; height: 6px; display: block; transition: transform 0.15s ease; }
+.crumbs .proj-menu-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.proj-menu { position: absolute; top: calc(100% + 10px); left: -10px; z-index: 30; min-width: 170px; display: flex; flex-direction: column; padding: 4px; background: var(--raise); border: 1px solid var(--rule); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
+.crumbs .proj-menu button { appearance: none; background: none; border: 0; font: inherit; font-size: 0.84rem; color: var(--ink); text-align: left; text-decoration: none; padding: 8px 10px; cursor: pointer; white-space: nowrap; }
+.crumbs .proj-menu button:hover { background: var(--paper); color: var(--seal); }
 .in-project .crumbs.head-crumbs { display: flex; }
 .in-project .brandline { align-items: center; }
 .subnav { border-bottom: 0; }
@@ -210,7 +218,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
     <div class="brandline">
       <button type="button" class="brand" data-go="projects">Building the Philippines</button>
       <span class="brand-sub">Updates on the country's major projects</span>
-      <div class="crumbs head-crumbs"><button type="button" data-go="projects">Projects</button></div>
+      <div class="crumbs head-crumbs"><button type="button" data-go="projects">Projects</button><span class="proj-menu-wrap"><button type="button" class="proj-menu-btn" id="proj-menu-btn" aria-haspopup="true" aria-expanded="false" aria-label="Show all projects"><svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="proj-menu" id="proj-menu" hidden><button type="button" data-project="pax-silica">Pax Silica</button></span></span></div>
       <span class="spacer"></span>
       <button type="button" id="theme-btn" class="theme-btn">Light</button>
     </div>
@@ -571,6 +579,31 @@ function start(saved) {
       renderFeed();
     });
   });
+
+  var pmBtn = document.getElementById('proj-menu-btn');
+  var pmMenu = document.getElementById('proj-menu');
+  function closeProjMenu() {
+    if (!pmMenu) { return; }
+    pmMenu.hidden = true;
+    pmBtn.setAttribute('aria-expanded', 'false');
+  }
+  if (pmBtn && pmMenu) {
+    pmBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var willOpen = pmMenu.hidden;
+      pmMenu.hidden = !willOpen;
+      pmBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+    pmMenu.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', closeProjMenu);
+    });
+    document.addEventListener('click', function (e) {
+      if (!pmMenu.hidden && !pmMenu.contains(e.target)) { closeProjMenu(); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !pmMenu.hidden) { closeProjMenu(); pmBtn.focus(); }
+    });
+  }
 
   render();
   if (state.view === 'project' && state.tab === 'updates') { loadUpdates(); }
