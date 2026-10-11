@@ -123,7 +123,8 @@ a:hover { text-decoration-color: var(--seal); }
 /* project header */
 .crumbs { font-size: 0.78rem; color: var(--ink-soft); display: flex; gap: 6px; flex-wrap: wrap; }
 .crumbs button { appearance: none; background: none; border: 0; padding: 0; font: inherit; color: var(--ink-soft); cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
-.proj-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4vw, 1.9rem); line-height: 1.15; }
+.proj-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4vw, 1.9rem); line-height: 1.15; appearance: none; background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; text-align: left; display: block; }
+.proj-title:hover { color: var(--seal); }
 .project-top { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
 .proj-meta-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; }
 
@@ -245,7 +246,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
     <!-- PROJECT: PAX SILICA -->
     <section id="view-project" hidden>
       <div class="project-top">
-        <span class="proj-title">Pax Silica</span>
+        <button type="button" class="proj-title" data-project="pax-silica">Pax Silica</button>
         <div class="proj-meta-row">
           <span class="proj-place">New Clark City, Tarlac</span>
           <nav class="tabs subnav" aria-label="Pax Silica pages">
