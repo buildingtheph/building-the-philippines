@@ -88,10 +88,6 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 .theme-btn { appearance: none; background: none; border: 1px solid var(--rule); color: var(--ink-soft); font-family: var(--ui); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; cursor: pointer; white-space: nowrap; }
 .theme-btn:hover { color: var(--ink); border-color: var(--ink-soft); }
 
-.tabs { display: flex; gap: 2px; overflow-x: auto; }
-.tabs button { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; color: var(--ink-soft); font-family: var(--ui); font-size: 0.84rem; font-weight: 600; letter-spacing: 0.01em; padding: 9px 13px; cursor: pointer; white-space: nowrap; }
-@media (hover: hover) { .tabs button:hover { color: var(--ink); } }
-.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--seal); }
 .in-project .brand-sub { display: none; }
 .in-project .masthead { padding-block: 20px 16px; }
 .crumbs.head-crumbs { display: none; font-size: 0.82rem; align-items: center; position: relative; }
@@ -108,11 +104,6 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 .soon-tag { font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--ink-soft); opacity: 0.75; }
 .in-project .crumbs.head-crumbs { display: flex; }
 .in-project .brandline { align-items: center; }
-.subnav { border-bottom: 0; }
-.subnav button { font-size: 0.8rem; padding: 4px 12px; }
-.subnav button:last-child { padding-right: 0; }
-.proj-meta-row .subnav { margin-left: auto; }
-@media (max-width: 619px) { .subnav button { padding-block: 10px; } }
 
 button:focus-visible, a:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
 
@@ -157,8 +148,12 @@ a:hover { text-decoration-color: var(--seal); }
 .crumbs button { appearance: none; background: none; border: 0; padding: 0; font: inherit; color: var(--ink-soft); cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
 .proj-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4vw, 1.9rem); line-height: 1.15; appearance: none; background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; text-align: left; display: block; }
 @media (hover: hover) { .proj-title:hover { color: var(--seal); } }
-.project-top { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
-.proj-meta-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; }
+.project-top { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+.proj-id { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.proj-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.proj-tabs button { appearance: none; font-family: var(--ui); font-size: 0.84rem; font-weight: 600; color: var(--ink-soft); background: var(--raise); border: 1px solid var(--rule); padding: 9px 14px; cursor: pointer; }
+@media (hover: hover) { .proj-tabs button:hover { color: var(--ink); border-color: var(--ink-soft); } }
+.proj-tabs button[aria-selected="true"] { background: var(--seal); border-color: var(--seal); color: var(--paper); }
 
 /* introduction: quote + videos */
 .quote { display: flex; flex-direction: column; gap: 18px; padding-block: 8px 4px; }
@@ -296,15 +291,15 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
     <!-- PROJECT: PAX SILICA -->
     <section id="view-project" hidden>
       <div class="project-top">
-        <button type="button" class="proj-title" data-project="pax-silica">Pax Silica</button>
-        <div class="proj-meta-row">
+        <div class="proj-id">
+          <button type="button" class="proj-title" data-project="pax-silica">Pax Silica</button>
           <span class="proj-place">New Clark City, Tarlac</span>
-          <nav class="tabs subnav" aria-label="Pax Silica pages">
-            <button type="button" data-tab="where" aria-selected="false">Where We Are</button>
-            <button type="button" data-tab="updates" aria-selected="false">Latest Updates</button>
-            <button type="button" data-tab="map" aria-selected="false">Map</button>
-          </nav>
         </div>
+        <nav class="proj-tabs" aria-label="Pax Silica pages">
+          <button type="button" data-tab="where" aria-selected="false">Where We Are</button>
+          <button type="button" data-tab="updates" aria-selected="false">Latest Updates</button>
+          <button type="button" data-tab="map" aria-selected="false">Map</button>
+        </nav>
       </div>
 
       <!-- Introduction -->
