@@ -156,9 +156,14 @@ a:hover { text-decoration-color: var(--seal); }
 
 /* introduction: quote + videos */
 .quote { display: flex; flex-direction: column; gap: 14px; padding-block: 8px 4px; }
-.quote blockquote { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(1rem, 2.4vw, 1.25rem); line-height: 1.38; max-width: 34ch; text-wrap: balance; }
-.quote-translation { display: flex; flex-direction: column; gap: 6px; }
-.quote-translation p + p { font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft); max-width: 52ch; }
+.quote blockquote { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(1rem, 2.4vw, 1.25rem); line-height: 1.38; max-width: 62ch; text-wrap: pretty; }
+.nobr { white-space: nowrap; }
+.quote-translation { display: flex; flex-direction: column; gap: 6px; width: fit-content; max-width: 100%; text-align: right; margin-top: 10px; margin-bottom: 14px; }
+@media (min-width: 620px) { .tr-line { display: block; } }
+.quote-translation p { max-width: none; }
+.quote-translation .eyebrow { font-size: 0.74rem; letter-spacing: 0.16em; }
+.quote-translation p + p { font-size: 0.82rem; line-height: 1.4; letter-spacing: 0.01em; color: var(--ink-soft); }
+@media (max-width: 619px) { .quote-translation { text-align: left; } }
 .quote figcaption { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; font-size: 0.8rem; color: var(--ink-soft); }
 .quote-name { font-weight: 700; color: var(--ink); }
 .reels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -297,10 +302,10 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
       <!-- Introduction -->
       <div id="tab-overview" class="stack-lg">
         <figure class="quote">
-          <blockquote lang="fil">“Imbes na maging bystander tayo ng ganitong mga pinag-aagawang industriya ano po na nilalampas-lampasan lang tayo ay magiging builder na tayo, magiging sentro na tayo mismo ng ganitong mga activities na po. And then this hub will create a new engine for investment.”</blockquote>
+          <blockquote lang="fil">“Imbes na maging bystander tayo ng ganitong mga <span class="nobr">pinag-aagawang</span> industriya ano po na <span class="nobr">nilalampas-lampasan</span> lang tayo ay magiging builder na tayo, magiging sentro na tayo mismo ng ganitong mga activities na po. And then this hub will create a new engine for investment.”</blockquote>
           <div class="quote-translation">
             <p class="eyebrow">Translation</p>
-            <p lang="en">Instead of being bystanders to these contested industries that keep passing us by, we will become builders. We ourselves will become the center of these activities. And then this hub will create a new engine for investment.</p>
+            <p lang="en"><span class="tr-line">“Instead of being bystanders to these contested industries that keep passing us by,</span> <span class="tr-line">we will become builders. We ourselves will become the centre of these activities.</span> <span class="tr-line">And then this hub will create a new engine for investment.”</span></p>
           </div>
           <figcaption><span class="quote-name">Joshua M. Bingcang</span><span>President and CEO, Bases Conversion and Development Authority (BCDA)</span><a href="https://www.youtube.com/live/WCkDIpn82fY?t=1584" target="_blank" rel="noopener">Source</a></figcaption>
         </figure>
