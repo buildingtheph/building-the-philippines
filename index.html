@@ -120,6 +120,14 @@ main { padding-block: 34px 56px; }
 .about-head { font-size: clamp(1.2rem, 3vw, 1.45rem); line-height: 1.3; max-width: 32em; }
 .about-body { max-width: 35rem; margin-inline: auto; }
 .about .about-head, .about .lede, .about .small-print { max-width: none; }
+.about-more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font-family: var(--ui); font-size: 0.84rem; font-weight: 600; color: var(--seal); }
+.about-more summary::-webkit-details-marker { display: none; }
+.about-more summary:hover { text-decoration: underline; text-underline-offset: 3px; }
+.about-more summary:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+.about-more summary svg { width: 10px; height: 6px; transition: transform 0.15s ease; }
+.about-more[open] summary svg { transform: rotate(180deg); }
+.about-more .more-close, .about-more[open] .more-open { display: none; }
+.about-more[open] .more-close { display: inline; }
 .small-print { margin-top: 22px; font-size: 0.82rem; line-height: 1.55; color: var(--ink-soft); }
 .eyebrow { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
 h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem, 3.4vw, 1.65rem); line-height: 1.22; letter-spacing: -0.01em; text-wrap: balance; margin-top: 8px; }
@@ -257,10 +265,13 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
         <div class="about-body">
           <h2 class="about-head">The place where you can track the major national projects that are Building the Philippines right now.</h2>
           <p class="lede">Whether we live at home or abroad, most of us want the same thing: a Philippines that does better, and at the very least keeps pace with our neighbours in Asia.</p>
-          <p class="lede">It isn’t always easy to believe that’s possible. Most of the news we see is bad — corruption, floods, power bills that keep climbing. These are real problems, and many Filipinos are struggling. After a while, it becomes hard to imagine anything changing.</p>
-          <p class="lede">But big things are being planned and built right now, and big promises are being made about them. You may not have heard about them. Or maybe you have, and tuned them out because you don’t believe those in power will walk the talk. That’s why I built this site: to raise awareness, and to give everyone a public record of what was promised, what has actually happened, and the gap in between that still needs closing. After all, a promise only means something if someone is keeping track.</p>
-          <p class="lede">If you’ve read this far, it’s because, like me, you haven’t given up on our country. Keeping watch is how we show it — and it’s the first step to holding those in charge accountable.</p>
-          <p class="lede">So use what you find here. Share it, make a video about it, talk about it with the people around you. The more of us paying attention, the harder we are to ignore.</p>
+          <details class="about-more">
+            <summary><span class="more-open">Read why this site exists</span><span class="more-close">Show less</span><svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+            <p class="lede">It isn’t always easy to believe that’s possible. Most of the news we see is bad — corruption, floods, power bills that keep climbing. These are real problems, and many Filipinos are struggling. After a while, it becomes hard to imagine anything changing.</p>
+            <p class="lede">But big things are being planned and built right now, and big promises are being made about them. You may not have heard about them. Or maybe you have, and tuned them out because you don’t believe those in power will walk the talk. That’s why I built this site: to raise awareness, and to give everyone a public record of what was promised, what has actually happened, and the gap in between that still needs closing. After all, a promise only means something if someone is keeping track.</p>
+            <p class="lede">If you’ve read this far, it’s because, like me, you haven’t given up on our country. Keeping watch is how we show it — and it’s the first step to holding those in charge accountable.</p>
+            <p class="lede">So use what you find here. Share it, make a video about it, talk about it with the people around you. The more of us paying attention, the harder we are to ignore.</p>
+          </details>
           <p class="small-print">This site doesn’t tell you what to think about any project. It sets out what has been promised and what has happened, with sources, so you can make up your own mind. There’s no comment section here. Take what you learn and talk about it — with your family, your friends, or online.</p>
         </div>
       </div>
