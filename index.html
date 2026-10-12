@@ -78,8 +78,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 .tabs button { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; color: var(--ink-soft); font-family: var(--ui); font-size: 0.84rem; font-weight: 600; letter-spacing: 0.01em; padding: 9px 13px; cursor: pointer; white-space: nowrap; }
 .tabs button:hover { color: var(--ink); }
 .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--seal); }
-.site-nav { margin-top: 20px; }
-.in-project .site-nav, .in-project .brand-sub { display: none; }
+.in-project .brand-sub { display: none; }
 .in-project .masthead { padding-block: 20px 16px; }
 .crumbs.head-crumbs { display: none; font-size: 0.82rem; align-items: center; position: relative; }
 .proj-menu-wrap { display: inline-flex; align-items: center; }
@@ -102,6 +101,8 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 button:focus-visible, a:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
 
 main { padding-block: 34px 56px; }
+.section-head { max-width: none; font-family: var(--ui); font-size: 0.84rem; font-weight: 600; color: var(--ink); padding-bottom: 9px; border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
+.projects .proj:first-child { border-top: 0; }
 .eyebrow { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
 h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem, 3.4vw, 1.65rem); line-height: 1.22; letter-spacing: -0.01em; text-wrap: balance; margin-top: 8px; }
 h3 { font-family: var(--ui); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-soft); }
@@ -227,21 +228,19 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
       <span class="spacer"></span>
       <button type="button" id="theme-btn" class="theme-btn">Light</button>
     </div>
-    <nav class="tabs site-nav" aria-label="Main pages">
-      <button type="button" data-nav="projects" aria-selected="true">Projects</button>
-      <button type="button" data-nav="about" aria-selected="false">About</button>
-    </nav>
   </header>
 
   <main>
     <!-- PROJECTS HUB -->
     <section id="view-projects" class="stack-lg">
       <div>
-        <p class="eyebrow">Projects</p>
-        <h2>The Philippines' major projects, followed stage by stage</h2>
-        <p class="lede">Each project has its own section showing what has been promised, what has happened, and the latest official updates. Information is checked weekly.</p>
+        <p class="section-head">About</p>
+        <h2>A public record of the Philippines' major projects</h2>
+        <p class="lede">Building the Philippines follows large national projects from announcement to completion, so Filipinos at home and abroad can see what has been promised, what has happened, and where the two differ.</p>
       </div>
-      <div class="projects">
+      <div>
+        <p class="section-head">Projects</p>
+        <div class="projects">
         <button type="button" class="proj" data-project="pax-silica">
           <span class="proj-name">Pax Silica</span>
           <span class="proj-place">New Clark City, Tarlac</span>
@@ -253,6 +252,17 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
           <span style="font-size:0.93rem">Further projects will be added here as they develop.</span>
           <span class="proto-note">Prototype note: this is where the Luzon Economic Corridor or another project would go. Each gets the same four pages as Pax Silica.</span>
         </div>
+        </div>
+      </div>
+      <div class="stack">
+        <h3>How this site works</h3>
+        <dl class="notes">
+          <div class="note"><dt>Checked weekly</dt><dd>Official sources are reviewed every week. Each item on a project's <em>Where We Are</em> page shows the date it was last checked.</dd></div>
+          <div class="note"><dt>Make up your own mind</dt><dd>The site sets out information and sources. It does not argue for or against any project, and reaches no conclusion on your behalf.</dd></div>
+          <div class="note"><dt>Primary sources first</dt><dd>Official records are used wherever they exist. Reporting is used only where no official record covers the story.</dd></div>
+          <div class="note"><dt>Sources</dt><dd>The bodies this site monitors for each project are listed on the <button type="button" class="linkish" data-go="sources">Sources</button> page.</dd></div>
+          <div class="note"><dt>No contact, no comments</dt><dd>This is a reading resource, not a forum. There is no comment section and no way to get in touch here.</dd></div>
+        </dl>
       </div>
     </section>
 
@@ -401,24 +411,6 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
     </section>
 
     <!-- ABOUT (site-wide) -->
-    <section id="view-about" class="stack-lg" hidden>
-      <div>
-        <p class="eyebrow">About this site</p>
-        <h2>A public record of the Philippines' major projects</h2>
-        <p class="lede">Building the Philippines follows large national projects from announcement to completion, so Filipinos at home and abroad can see what has been promised, what has happened, and where the two differ.</p>
-      </div>
-      <div class="stack">
-        <h3>How this site works</h3>
-        <dl class="notes">
-          <div class="note"><dt>Checked weekly</dt><dd>Official sources are reviewed every week. Each item on a project's <em>Where We Are</em> page shows the date it was last checked.</dd></div>
-          <div class="note"><dt>Make up your own mind</dt><dd>The site sets out information and sources. It does not argue for or against any project, and reaches no conclusion on your behalf.</dd></div>
-          <div class="note"><dt>Primary sources first</dt><dd>Official records are used wherever they exist. Reporting is used only where no official record covers the story.</dd></div>
-          <div class="note"><dt>Sources</dt><dd>The bodies this site monitors for each project are listed on the <button type="button" class="linkish" data-go="sources">Sources</button> page.</dd></div>
-          <div class="note"><dt>No contact, no comments</dt><dd>This is a reading resource, not a forum. There is no comment section and no way to get in touch here.</dd></div>
-        </dl>
-      </div>
-    </section>
-
     <!-- SOURCES (site-wide, footer) -->
     <section id="view-sources" class="stack-lg" hidden>
       <div>
@@ -449,7 +441,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
   <footer>
     <div class="footrow">
       <span>Building the Philippines — updates on the country's major projects</span>
-      <button type="button" data-go="about">About</button>
+      <button type="button" data-go="projects">About</button>
       <button type="button" data-go="sources">Sources</button>
       <span>No contact. No comments.</span>
     </div>
@@ -459,13 +451,13 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
 <script>
 function start(saved) {
   var HOST = 'buildingthephilippines.com';
-  var views = ['projects', 'project', 'about', 'sources'];
+  var views = ['projects', 'project', 'sources'];
   var tabs = ['overview', 'where', 'updates', 'map'];
   var tabPath = { overview: '', where: '/where-we-are', updates: '/latest-updates', map: '/map' };
   function parseHash() {
     var h = (location.hash || '').replace(/^#\/?/, '');
     if (!h) return null;
-    if (h === 'about') return { view: 'about', tab: 'overview' };
+    if (h === 'about') return { view: 'projects', tab: 'overview' }; // old bookmarks
     if (h === 'sources') return { view: 'sources', tab: 'overview' };
     if (h.indexOf('pax-silica') === 0) {
       var seg = h.slice('pax-silica'.length).replace(/^\//, '');
@@ -503,7 +495,6 @@ function start(saved) {
 
   function stateToHash(v, t) {
     if (v === 'project') return '#pax-silica' + tabPath[t || 'overview'];
-    if (v === 'about') return '#about';
     if (v === 'sources') return '#sources';
     return location.pathname;
   }
