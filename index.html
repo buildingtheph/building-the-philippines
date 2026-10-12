@@ -90,7 +90,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 
 .tabs { display: flex; gap: 2px; overflow-x: auto; }
 .tabs button { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; color: var(--ink-soft); font-family: var(--ui); font-size: 0.84rem; font-weight: 600; letter-spacing: 0.01em; padding: 9px 13px; cursor: pointer; white-space: nowrap; }
-.tabs button:hover { color: var(--ink); }
+@media (hover: hover) { .tabs button:hover { color: var(--ink); } }
 .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--seal); }
 .in-project .brand-sub { display: none; }
 .in-project .masthead { padding-block: 20px 16px; }
@@ -111,6 +111,8 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 .subnav { border-bottom: 0; }
 .subnav button { font-size: 0.8rem; padding: 4px 12px; }
 .subnav button:last-child { padding-right: 0; }
+.proj-meta-row .subnav { margin-left: auto; }
+@media (max-width: 619px) { .subnav button { padding-block: 10px; } }
 
 button:focus-visible, a:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
 
@@ -137,7 +139,7 @@ a:hover { text-decoration-color: var(--seal); }
 .projects { display: flex; flex-direction: column; }
 .proj { appearance: none; text-align: left; font: inherit; color: inherit; width: 100%; background: none; border: 0; border-top: 1px solid var(--rule); padding: 20px 0; display: grid; grid-template-columns: 1fr; gap: 8px; cursor: pointer; }
 .proj:last-child { border-bottom: 1px solid var(--rule); }
-.proj:hover .proj-name { color: var(--seal); }
+@media (hover: hover) { .proj:hover .proj-name { color: var(--seal); } }
 .proj-name { font-family: var(--display); font-size: 1.3rem; font-weight: 600; line-height: 1.2; }
 .proj-place { font-size: 0.82rem; color: var(--ink-soft); }
 .proj-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 0.78rem; color: var(--ink-soft); }
@@ -154,7 +156,7 @@ a:hover { text-decoration-color: var(--seal); }
 .crumbs { font-size: 0.78rem; color: var(--ink-soft); display: flex; gap: 6px; flex-wrap: wrap; }
 .crumbs button { appearance: none; background: none; border: 0; padding: 0; font: inherit; color: var(--ink-soft); cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
 .proj-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4vw, 1.9rem); line-height: 1.15; appearance: none; background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; text-align: left; display: block; }
-.proj-title:hover { color: var(--seal); }
+@media (hover: hover) { .proj-title:hover { color: var(--seal); } }
 .project-top { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
 .proj-meta-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; }
 
