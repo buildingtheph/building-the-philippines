@@ -172,6 +172,17 @@ a:hover { text-decoration-color: var(--seal); }
 .vid small { font-size: 0.72rem; font-variant-numeric: tabular-nums; }
 .vid-tall { aspect-ratio: 9 / 16; }
 .vid-wide { aspect-ratio: 16 / 9; width: 100%; }
+.reel-dots { display: none; }
+@media (max-width: 619px) {
+  .reels { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .reels::-webkit-scrollbar { display: none; }
+  .reels .vid { flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+  .reel-dots { display: flex; justify-content: center; gap: 2px; margin-top: 6px; }
+  .reel-dots button { appearance: none; background: none; border: 0; width: 28px; height: 28px; padding: 0; cursor: pointer; display: grid; place-items: center; }
+  .reel-dots button::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--rule); transition: background 0.15s ease; }
+  .reel-dots button[aria-current="true"]::before { background: var(--seal); }
+  .reel-dots button:focus-visible { outline: 2px solid var(--seal); outline-offset: 0; border-radius: 50%; }
+}
 
 /* report call-out */
 .report { border: 1px solid var(--rule); border-left: 3px solid var(--seal); background: var(--raise); padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
@@ -317,7 +328,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
 
         <div class="stack">
           <h3>Watch</h3>
-          <div class="reels">
+          <div class="reels" id="reels" aria-label="Videos">
             <div class="vid vid-tall"><i aria-hidden="true">▶</i><span>Video 1</span><small>9:16</small></div>
             <div class="vid vid-tall"><i aria-hidden="true">▶</i><span>Video 2</span><small>9:16</small></div>
             <div class="vid vid-tall"><i aria-hidden="true">▶</i><span>Video 3</span><small>9:16</small></div>
@@ -627,6 +638,41 @@ function start(saved) {
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !pmMenu.hidden) { closeProjMenu(); pmBtn.focus(); }
     });
+  }
+
+  // video carousel (phones): dots follow the swipe, and tapping a dot jumps to that video
+  var reels = document.getElementById('reels');
+  if (reels) {
+    var vids = Array.prototype.slice.call(reels.children);
+    var dots = document.createElement('div');
+    dots.className = 'reel-dots';
+    dots.setAttribute('aria-label', 'Choose a video');
+    vids.forEach(function (v, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Video ' + (i + 1) + ' of ' + vids.length);
+      b.setAttribute('aria-current', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        reels.scrollTo({ left: v.offsetLeft - reels.offsetLeft, behavior: smooth ? 'smooth' : 'auto' });
+      });
+      dots.appendChild(b);
+    });
+    reels.parentNode.insertBefore(dots, reels.nextSibling);
+    var ticking = false;
+    reels.addEventListener('scroll', function () {
+      if (ticking) { return; }
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        var best = 0, bestDist = Infinity;
+        vids.forEach(function (v, i) {
+          var dist = Math.abs((v.offsetLeft - reels.offsetLeft) - reels.scrollLeft);
+          if (dist < bestDist) { bestDist = dist; best = i; }
+        });
+        Array.prototype.forEach.call(dots.children, function (b, i) { b.setAttribute('aria-current', i === best ? 'true' : 'false'); });
+      });
+    }, { passive: true });
   }
 
   render();
