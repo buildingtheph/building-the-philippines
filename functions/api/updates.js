@@ -2,8 +2,8 @@
  * Cloudflare Pages Function: /api/updates
  *
  * Queries the Notion Latest Updates database and returns only the five
- * public columns (Date, Source, Type, Title, Link) for all Approved rows,
- * newest first. The NOTION_TOKEN env var is never exposed to the browser.
+ * public columns (Date, Source, Type, Title, Link) plus Section for all
+ * Approved rows, newest first. Rows with no Section count as Latest Updates. The NOTION_TOKEN env var is never exposed to the browser.
  */
 
 const DATABASE_ID = '36594e32-0512-4a2b-9db1-82ba811f3cb5';
@@ -52,7 +52,7 @@ export async function onRequest(context) {
 
     const data = await notionRes.json();
 
-    // Strip everything private — only pass the five public columns
+    // Strip everything private: only the five public columns plus Section
     const items = data.results.map((page) => {
       const p = page.properties;
       return {
@@ -61,6 +61,7 @@ export async function onRequest(context) {
         type:   p.Type?.select?.name   ?? null,
         title:  p.Title?.title?.[0]?.plain_text ?? null,
         link:   p.Link?.url            ?? null,
+        section: p.Section?.select?.name ?? 'Latest Updates',
       };
     }).filter(item => item.title); // skip any rows with no title
 

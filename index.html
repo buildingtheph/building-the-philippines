@@ -410,7 +410,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
         <div>
           <p class="eyebrow">Latest updates</p>
           <h2>Official records from the bodies overseeing the project</h2>
-          <p class="lede">Only official statements, hearings, releases and documents from the seven bodies that cover this project. Nothing is published here until it has been checked and approved.</p>
+          <p class="lede">Concrete developments only: something signed, filed, approved or published by one of the seven bodies that oversee this project.</p>
           <p class="caveat">Checked daily. Each item links to its original source.</p>
         </div>
         <div class="stack">
@@ -429,6 +429,14 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
               <p style="color:var(--ink-soft);font-size:0.9rem">Loading updates…</p>
             </div>
           </div>
+        </div>
+        <div class="stack" id="other-block" hidden>
+          <div>
+            <p class="eyebrow">Other news</p>
+            <p class="lede" style="margin-top:10px">Statements, speeches, hearings and reporting about Pax Silica, from official bodies and named news outlets. These are not decisions.</p>
+          </div>
+          <div id="other-feed" class="feed"></div>
+          <div><button type="button" class="btn" id="other-more" hidden>Show more</button></div>
         </div>
       </div>
 
@@ -543,6 +551,8 @@ function start(saved) {
   // ── Latest Updates live feed ───────────────────────────────────────────────
   var updatesLoaded = false;
   var allItems = [];
+  var otherItems = [];
+  var otherShown = 10;
   var activeSource = 'All';
 
   function fmtDate(iso) {
@@ -570,6 +580,25 @@ function start(saved) {
     }).join('');
   }
 
+  function entryHtml(item) {
+    return '<article class="entry">' +
+      '<div class="entry-head">' +
+      '<span class="entry-src">' + escHtml(item.source || '') + '</span>' +
+      (item.type ? '<span>' + escHtml(item.type) + '</span>' : '') +
+      (item.date ? '<span class="entry-date">' + fmtDate(item.date) + '</span>' : '') +
+      '</div>' +
+      '<p class="entry-title">' + (item.link ? '<a href="' + escAttr(item.link) + '" target="_blank" rel="noopener">' + escHtml(item.title || '') + '</a>' : escHtml(item.title || '')) + '</p>' +
+      '</article>';
+  }
+
+  function renderOther() {
+    var block = document.getElementById('other-block');
+    block.hidden = otherItems.length === 0;
+    if (!otherItems.length) return;
+    document.getElementById('other-feed').innerHTML = otherItems.slice(0, otherShown).map(entryHtml).join('');
+    document.getElementById('other-more').hidden = otherItems.length <= otherShown;
+  }
+
   function escHtml(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
@@ -581,7 +610,10 @@ function start(saved) {
       .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
       .then(function (data) {
         updatesLoaded = true;
-        allItems = data.items || [];
+        var items = data.items || [];
+        allItems = items.filter(function (i) { return i.section !== 'Other News'; });
+        otherItems = items.filter(function (i) { return i.section === 'Other News'; });
+        renderOther();
         if (allItems.length === 0) {
           document.getElementById('updates-feed').innerHTML =
             '<p style="padding:16px 0;color:var(--ink-soft);font-size:0.9rem">No approved updates yet.</p>';
@@ -606,6 +638,8 @@ function start(saved) {
       if (t === 'updates') { loadUpdates(); }
     });
   });
+  var moreBtn = document.getElementById('other-more');
+  if (moreBtn) { moreBtn.addEventListener('click', function () { otherShown += 10; renderOther(); }); }
   document.querySelectorAll('.filter').forEach(function (f) {
     f.addEventListener('click', function () {
       document.querySelectorAll('.filter').forEach(function (o) { o.setAttribute('aria-pressed', 'false'); });
