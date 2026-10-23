@@ -591,9 +591,9 @@ function start(saved) {
   function entryHtml(item) {
     return '<article class="entry">' +
       '<div class="entry-head">' +
+      (isVideoLink(item.link) ? VIDEO_TAG : '') +
       '<span class="entry-src">' + escHtml(item.source || '') + '</span>' +
       (item.type ? '<span>' + escHtml(item.type) + '</span>' : '') +
-      (isVideoLink(item.link) ? VIDEO_TAG : '') +
       (item.date ? '<span class="entry-date">' + fmtDate(item.date) + '</span>' : '') +
       '</div>' +
       '<p class="entry-title">' + (item.link ? '<a href="' + escAttr(item.link) + '" target="_blank" rel="noopener">' + escHtml(item.title || '') + '</a>' : escHtml(item.title || '')) + '</p>' +
