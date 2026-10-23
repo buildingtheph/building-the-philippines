@@ -228,6 +228,8 @@ a:hover { text-decoration-color: var(--seal); }
 .entry:last-child { border-bottom: 1px solid var(--rule); }
 .entry-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; font-size: 0.74rem; color: var(--ink-soft); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 .entry-src { color: var(--seal); }
+.entry-vid { display: inline-flex; align-items: center; gap: 5px; color: var(--seal); white-space: nowrap; }
+.entry-vid svg { width: 0.62em; height: 0.78em; flex: none; }
 .entry-date { font-variant-numeric: tabular-nums; }
 .entry-title { font-family: var(--display); font-size: 1.08rem; line-height: 1.45; max-width: none; }
 .entry-sum { font-size: 0.92rem; color: var(--ink-soft); max-width: 70ch; }
@@ -567,23 +569,31 @@ function start(saved) {
       feed.innerHTML = '<p style="padding:16px 0;color:var(--ink-soft);font-size:0.9rem">No updates for this source yet.</p>';
       return;
     }
-    feed.innerHTML = filtered.map(function (item) {
-      return '<article class="entry">' +
-        '<div class="entry-head">' +
-        '<span class="entry-src">' + escHtml(item.source || '') + '</span>' +
-        (item.type ? '<span>' + escHtml(item.type) + '</span>' : '') +
-        (item.date ? '<span class="entry-date">' + fmtDate(item.date) + '</span>' : '') +
-        '</div>' +
-        '<p class="entry-title">' + (item.link ? '<a href="' + escAttr(item.link) + '" target="_blank" rel="noopener">' + escHtml(item.title || '') + '</a>' : escHtml(item.title || '')) + '</p>' +
-        '</article>';
-    }).join('');
+    feed.innerHTML = filtered.map(entryHtml).join('');
   }
+
+  // A link that opens a video, judged from the URL. No Notion field needed, so it
+  // applies to rows already approved. Facebook URLs vary, so some may be missed.
+  var VIDEO_URL = [
+    /youtu\.be\//i,
+    /youtube\.com\/(watch|live|shorts|embed)/i,
+    /fb\.watch\//i,
+    /facebook\.com\/(watch|reel)/i,
+    /facebook\.com\/[^/?#]+\/videos\//i
+  ];
+  function isVideoLink(link) {
+    if (!link) return false;
+    for (var i = 0; i < VIDEO_URL.length; i++) { if (VIDEO_URL[i].test(link)) return true; }
+    return false;
+  }
+  var VIDEO_TAG = '<span class="entry-vid"><svg viewBox="0 0 8 10" aria-hidden="true"><path d="M0 0l8 5-8 5z" fill="currentColor"/></svg>Video</span>';
 
   function entryHtml(item) {
     return '<article class="entry">' +
       '<div class="entry-head">' +
       '<span class="entry-src">' + escHtml(item.source || '') + '</span>' +
       (item.type ? '<span>' + escHtml(item.type) + '</span>' : '') +
+      (isVideoLink(item.link) ? VIDEO_TAG : '') +
       (item.date ? '<span class="entry-date">' + fmtDate(item.date) + '</span>' : '') +
       '</div>' +
       '<p class="entry-title">' + (item.link ? '<a href="' + escAttr(item.link) + '" target="_blank" rel="noopener">' + escHtml(item.title || '') + '</a>' : escHtml(item.title || '')) + '</p>' +
