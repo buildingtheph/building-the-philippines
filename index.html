@@ -108,18 +108,21 @@ body { background: var(--paper); color: var(--ink); font-family: var(--ui); font
 button:focus-visible, a:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
 
 main { padding-block: 34px 56px; }
-.section-head { max-width: none; font-family: var(--ui); font-size: 0.84rem; font-weight: 600; color: var(--ink); padding-bottom: 9px; border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
+.section-head { max-width: none; font-family: var(--display); font-size: clamp(1.45rem, 4vw, 1.9rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.012em; color: var(--ink); padding-bottom: 11px; border-bottom: 1px solid var(--rule); margin-bottom: 20px; }
 .projects .proj:first-child { border-top: 0; }
-.about-head { font-size: clamp(1.2rem, 3vw, 1.45rem); line-height: 1.3; max-width: 32em; }
+.about-head { font-size: clamp(1.45rem, 4vw, 1.9rem); line-height: 1.25; max-width: 26em; }
 .about-body { max-width: 35rem; }
 .about .about-head, .about .lede, .about .small-print { max-width: none; }
 .small-print { margin-top: 22px; font-size: 0.82rem; line-height: 1.55; color: var(--ink-soft); }
 .eyebrow { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
-h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem, 3.4vw, 1.65rem); line-height: 1.22; letter-spacing: -0.01em; text-wrap: balance; margin-top: 8px; }
+/* Type scale — one hierarchy, used on every page.
+   L1 page title (.brand, .proj-title) > L2 section title (h2, .section-title, .section-head)
+   > L3 subsection label (h3) > body > small print (.disclaimer, .small-print) */
+h2, .section-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.45rem, 4vw, 1.9rem); line-height: 1.2; letter-spacing: -0.012em; text-wrap: balance; }
+.disclaimer { margin-top: 12px; font-size: 0.84rem; line-height: 1.6; color: var(--ink-soft); max-width: 58ch; }
 h3 { font-family: var(--ui); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-soft); }
 p { max-width: 64ch; }
 .lede { font-family: var(--display); font-size: 1.06rem; line-height: 1.62; margin-top: 16px; }
-.caveat { margin-top: 16px; padding: 12px 15px; border-left: 2px solid var(--seal); background: var(--raise); font-size: 0.87rem; color: var(--ink-soft); max-width: 62ch; }
 .stack { display: flex; flex-direction: column; gap: 18px; }
 .stack-lg { display: flex; flex-direction: column; gap: 38px; }
 a { color: inherit; text-decoration-color: var(--rule); text-underline-offset: 3px; }
@@ -146,7 +149,7 @@ a:hover { text-decoration-color: var(--seal); }
 /* project header */
 .crumbs { font-size: 0.78rem; color: var(--ink-soft); display: flex; gap: 6px; flex-wrap: wrap; }
 .crumbs button { appearance: none; background: none; border: 0; padding: 0; font: inherit; color: var(--ink-soft); cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
-.proj-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4vw, 1.9rem); line-height: 1.15; appearance: none; background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; text-align: left; display: block; }
+.proj-title { font-family: var(--display); font-weight: 600; font-size: clamp(2.1rem, 6.5vw, 2.9rem); line-height: 1.1; letter-spacing: -0.02em; appearance: none; background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; text-align: left; display: block; }
 @media (hover: hover) { .proj-title:hover { color: var(--seal); } }
 .project-top { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
 .proj-id { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
@@ -356,9 +359,8 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
       <!-- Where We Are -->
       <div id="tab-where" class="stack-lg" hidden>
         <div>
-          <p class="eyebrow">Where we are</p>
-          <h2>Project stage and the promises made at each one</h2>
-          <p class="lede">The items below are commitments made publicly by the BCDA, the Philippine body negotiating and overseeing the project. Each shows its current status and the date it was last checked.</p>
+          <h2 class="section-title">Where We Are</h2>
+          <p class="disclaimer">Project stage and the promises made at each one. These are commitments made publicly by the BCDA, the Philippine body negotiating and overseeing the project. Each shows its current status and the date it was last checked.</p>
         </div>
         <div class="stack">
           <h3>Stage</h3>
@@ -408,10 +410,8 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
       <!-- Latest Updates -->
       <div id="tab-updates" class="stack-lg" hidden>
         <div>
-          <p class="eyebrow">Latest updates</p>
-          <h2>Official records from the bodies overseeing the project</h2>
-          <p class="lede">Concrete developments only: something signed, filed, approved or published by one of the seven bodies that oversee this project.</p>
-          <p class="caveat">Checked daily. Each item links to its original source.</p>
+          <h2 class="section-title">Latest Updates</h2>
+          <p class="disclaimer">Official records from the bodies overseeing the project. Concrete developments only: something signed, filed, approved or published by one of the seven bodies that oversee this project. Checked daily. Each item links to its original source.</p>
         </div>
         <div class="stack">
           <div class="filters" role="group" aria-label="Filter by source" id="updates-filters">
@@ -432,8 +432,8 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
         </div>
         <div class="stack" id="other-block" hidden>
           <div>
-            <p class="eyebrow">Other news</p>
-            <p class="lede" style="margin-top:10px">Statements, speeches, hearings and reporting about Pax Silica, from official bodies and named news outlets. These are not decisions.</p>
+            <h2 class="section-title">Other News</h2>
+            <p class="disclaimer">Statements, speeches, hearings and reporting about Pax Silica, from official bodies and named news outlets. These are not decisions.</p>
           </div>
           <div id="other-feed" class="feed"></div>
           <div><button type="button" class="btn" id="other-more" hidden>Show more</button></div>
@@ -443,8 +443,8 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
       <!-- Map -->
       <div id="tab-map" class="stack-lg" hidden>
         <div>
-          <p class="eyebrow">Map</p>
-          <h2>An interactive map of the site and what surrounds it</h2>
+          <h2 class="section-title">Map</h2>
+          <p class="disclaimer">An interactive map of the site and what surrounds it.</p>
         </div>
         <div class="soon">
           <p class="eyebrow">Not yet decided</p>
@@ -457,9 +457,8 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
     <!-- SOURCES (site-wide, footer) -->
     <section id="view-sources" class="stack-lg" hidden>
       <div>
-        <p class="eyebrow">Sources</p>
-        <h2>The bodies this site monitors</h2>
-        <p class="lede">This is the site's watch-list, grouped by project. Each project's guide carries its own full reference list.</p>
+        <h2 class="section-title">Sources</h2>
+        <p class="disclaimer">The bodies this site monitors, grouped by project. Each project's guide carries its own full reference list.</p>
       </div>
       <div class="group">
         <p class="group-name">Pax Silica</p>
