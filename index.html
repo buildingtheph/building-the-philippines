@@ -228,7 +228,7 @@ a:hover { text-decoration-color: var(--seal); }
 .entry:last-child { border-bottom: 1px solid var(--rule); }
 .entry-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; font-size: 0.74rem; color: var(--ink-soft); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 .entry-src { color: var(--seal); }
-.entry-vid { display: inline-flex; align-items: center; gap: 5px; color: var(--seal); white-space: nowrap; }
+.entry-vid { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 .entry-vid svg { width: 0.62em; height: 0.78em; flex: none; }
 .entry-date { font-variant-numeric: tabular-nums; }
 .entry-title { font-family: var(--display); font-size: 1.08rem; line-height: 1.45; max-width: none; }
@@ -591,10 +591,10 @@ function start(saved) {
   function entryHtml(item) {
     return '<article class="entry">' +
       '<div class="entry-head">' +
-      (isVideoLink(item.link) ? VIDEO_TAG : '') +
       '<span class="entry-src">' + escHtml(item.source || '') + '</span>' +
       (item.type ? '<span>' + escHtml(item.type) + '</span>' : '') +
       (item.date ? '<span class="entry-date">' + fmtDate(item.date) + '</span>' : '') +
+      (isVideoLink(item.link) ? VIDEO_TAG : '') +
       '</div>' +
       '<p class="entry-title">' + (item.link ? '<a href="' + escAttr(item.link) + '" target="_blank" rel="noopener">' + escHtml(item.title || '') + '</a>' : escHtml(item.title || '')) + '</p>' +
       '</article>';
