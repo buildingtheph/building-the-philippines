@@ -119,7 +119,7 @@ main { padding-block: 34px 56px; }
    L1 page title (.brand, .proj-title) > L2 section title (h2, .section-title, .section-head)
    > L3 subsection label (h3) > body > small print (.disclaimer, .small-print) */
 h2, .section-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.45rem, 4vw, 1.9rem); line-height: 1.2; letter-spacing: -0.012em; text-wrap: balance; }
-.disclaimer { margin-top: 12px; font-size: 0.88rem; line-height: 1.6; color: var(--ink-soft); max-width: 70ch; }
+.disclaimer { margin-top: 12px; font-size: 0.88rem; line-height: 1.6; color: var(--ink-soft); max-width: none; }
 h3 { font-family: var(--ui); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-soft); }
 p { max-width: 70ch; }
 .lede { font-family: var(--display); font-size: 1.06rem; line-height: 1.62; margin-top: 16px; }
@@ -360,7 +360,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
       <div id="tab-where" class="stack-lg" hidden>
         <div>
           <h2 class="section-title">Where We Are</h2>
-          <p class="disclaimer">Project stage and the promises made at each one. These are commitments made publicly by the BCDA, the Philippine body negotiating and overseeing the project. Each shows its current status and the date it was last checked.</p>
+          <p class="disclaimer">Commitments made publicly by the BCDA, with their status and the date each was last checked.</p>
         </div>
         <div class="stack">
           <h3>Stage</h3>
@@ -411,7 +411,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
       <div id="tab-updates" class="stack-lg" hidden>
         <div>
           <h2 class="section-title">Latest Updates</h2>
-          <p class="disclaimer">Official records from the bodies overseeing the project. Concrete developments only: something signed, filed, approved or published by one of the seven bodies that oversee this project. Checked daily. Each item links to its original source.</p>
+          <p class="disclaimer">Official records only: something signed, filed, approved or published. Checked daily, each with its source.</p>
         </div>
         <div class="stack">
           <div class="filters" role="group" aria-label="Filter by source" id="updates-filters">
@@ -433,7 +433,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
         <div class="stack" id="other-block" hidden>
           <div>
             <h2 class="section-title">Other News</h2>
-            <p class="disclaimer">Statements, speeches, hearings and reporting about Pax Silica, from official bodies and named news outlets. These are not decisions.</p>
+            <p class="disclaimer">Statements, speeches, hearings and reporting. These are not decisions.</p>
           </div>
           <div id="other-feed" class="feed"></div>
           <div><button type="button" class="btn" id="other-more" hidden>Show more</button></div>
@@ -458,7 +458,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
     <section id="view-sources" class="stack-lg" hidden>
       <div>
         <h2 class="section-title">Sources</h2>
-        <p class="disclaimer">The bodies this site monitors, grouped by project. Each project's guide carries its own full reference list.</p>
+        <p class="disclaimer">The bodies this site monitors, grouped by project. Each guide carries its own references.</p>
       </div>
       <div class="group">
         <p class="group-name">Pax Silica</p>
