@@ -314,8 +314,8 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
         </div>
         <nav class="proj-tabs" aria-label="Pax Silica pages">
           <button type="button" data-tab="overview" aria-selected="true">Intro</button>
-          <button type="button" data-tab="where" aria-selected="false">Where We Are</button>
           <button type="button" data-tab="updates" aria-selected="false">Latest Updates</button>
+          <button type="button" data-tab="where" aria-selected="false">Where We Are</button>
           <button type="button" data-tab="map" aria-selected="false">Map</button>
         </nav>
       </div>
@@ -496,8 +496,8 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
 function start(saved) {
   var HOST = 'buildingthephilippines.com';
   var views = ['projects', 'project', 'sources'];
-  var tabs = ['overview', 'where', 'updates', 'map'];
-  var tabPath = { overview: '', where: '/where-we-are', updates: '/latest-updates', map: '/map' };
+  var tabs = ['overview', 'updates', 'where', 'map'];
+  var tabPath = { overview: '', updates: '/latest-updates', where: '/where-we-are', map: '/map' };
   function parseHash() {
     var h = (location.hash || '').replace(/^#\/?/, '');
     if (!h) return null;
@@ -505,7 +505,7 @@ function start(saved) {
     if (h === 'sources') return { view: 'sources', tab: 'overview' };
     if (h.indexOf('pax-silica') === 0) {
       var seg = h.slice('pax-silica'.length).replace(/^\//, '');
-      var tabMap = { '': 'overview', 'where-we-are': 'where', 'latest-updates': 'updates', 'map': 'map' };
+      var tabMap = { '': 'overview', 'latest-updates': 'updates', 'where-we-are': 'where', 'map': 'map' };
       return { view: 'project', tab: tabMap[seg] || 'overview' };
     }
     return null;
