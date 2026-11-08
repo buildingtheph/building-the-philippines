@@ -286,6 +286,20 @@ a:hover { text-decoration-color: var(--seal); }
 @media (hover: hover) { .rel:hover .rel-tip { display: block; } }
 .entry-rel .rel:first-child .rel-tip { left: 0; transform: translateX(var(--dx, 0px)); }
 
+/* Other News: heavy divider, then a compact table (source and date | story | related links) */
+#other-block { border-top: 3px solid var(--ink); padding-top: 22px; gap: 8px; }
+#other-block .section-title { font-size: 1.15rem; }
+#other-block .disclaimer { margin-top: 4px; }
+#other-feed .entry { display: grid; grid-template-columns: minmax(0, 1fr) 56px; column-gap: 14px; row-gap: 3px; align-items: baseline; padding: 10px 0; }
+#other-feed .entry-head { grid-column: 1 / -1; font-size: 0.68rem; }
+#other-feed .entry-src { color: var(--ink-soft); }
+#other-feed .entry-title { font-size: 0.98rem; font-weight: 500; line-height: 1.4; }
+#other-feed .entry-links .entry-rel { margin-left: 0; flex-wrap: wrap; white-space: normal; }
+@media (min-width: 620px) {
+  #other-feed .entry { grid-template-columns: 150px minmax(0, 1fr) 56px; column-gap: 18px; }
+  #other-feed .entry-head { grid-column: auto; flex-direction: column; gap: 2px; }
+}
+
 .soon { border: 1px dashed var(--rule); background: var(--raise); padding: 44px 24px; text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; }
 
 .group { display: flex; flex-direction: column; gap: 22px; }
@@ -484,6 +498,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 22px 40px; }
               <p style="color:var(--ink-soft);font-size:0.9rem">Loading updates…</p>
             </div>
           </div>
+          <div><button type="button" class="btn" id="updates-more" hidden>Show more</button></div>
         </div>
         <div class="stack" id="other-block" hidden>
           <div>
@@ -607,6 +622,7 @@ function start(saved) {
   var allItems = [];
   var otherItems = [];
   var otherShown = 10;
+  var updatesShown = 5;
   var activeSource = 'All';
 
   function fmtDate(iso) {
@@ -620,9 +636,11 @@ function start(saved) {
     var filtered = activeSource === 'All' ? allItems : allItems.filter(function (i) { return i.source === activeSource; });
     if (filtered.length === 0) {
       feed.innerHTML = '<p style="padding:16px 0;color:var(--ink-soft);font-size:0.9rem">No updates for this source yet.</p>';
+      document.getElementById('updates-more').hidden = true;
       return;
     }
-    feed.innerHTML = filtered.map(entryHtml).join('');
+    feed.innerHTML = filtered.slice(0, updatesShown).map(entryHtml).join('');
+    document.getElementById('updates-more').hidden = filtered.length <= updatesShown;
   }
 
   // A link that opens a video, judged from the URL. No Notion field needed, so it
@@ -703,11 +721,22 @@ function start(saved) {
       '</article>';
   }
 
+  function otherEntryHtml(item) {
+    return '<article class="entry">' +
+      '<div class="entry-head">' +
+      '<span class="entry-src">' + escHtml(item.source || '') + '</span>' +
+      (item.date ? '<span class="entry-date">' + fmtDate(item.date) + '</span>' : '') +
+      '</div>' +
+      '<p class="entry-title">' + (item.link ? '<a href="' + escAttr(item.link) + '" target="_blank" rel="noopener">' + escHtml(item.title || '') + '</a>' : escHtml(item.title || '')) + '</p>' +
+      '<div class="entry-links">' + relHtml(item.related) + '</div>' +
+      '</article>';
+  }
+
   function renderOther() {
     var block = document.getElementById('other-block');
     block.hidden = otherItems.length === 0;
     if (!otherItems.length) return;
-    document.getElementById('other-feed').innerHTML = otherItems.slice(0, otherShown).map(entryHtml).join('');
+    document.getElementById('other-feed').innerHTML = otherItems.slice(0, otherShown).map(otherEntryHtml).join('');
     document.getElementById('other-more').hidden = otherItems.length <= otherShown;
   }
 
@@ -752,11 +781,14 @@ function start(saved) {
   });
   var moreBtn = document.getElementById('other-more');
   if (moreBtn) { moreBtn.addEventListener('click', function () { otherShown += 10; renderOther(); }); }
+  var updMoreBtn = document.getElementById('updates-more');
+  if (updMoreBtn) { updMoreBtn.addEventListener('click', function () { updatesShown += 5; renderFeed(); }); }
   document.querySelectorAll('.filter').forEach(function (f) {
     f.addEventListener('click', function () {
       document.querySelectorAll('.filter').forEach(function (o) { o.setAttribute('aria-pressed', 'false'); });
       f.setAttribute('aria-pressed', 'true');
       activeSource = f.getAttribute('data-src') || 'All';
+      updatesShown = 5;
       renderFeed();
     });
   });
