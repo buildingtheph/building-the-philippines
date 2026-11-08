@@ -281,10 +281,10 @@ a:hover { text-decoration-color: var(--seal); }
 .rel { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; color: var(--ink-soft); text-decoration: none; border-radius: 4px; }
 .rel svg { width: 16px; height: 16px; }
 .rel:hover, .rel:focus-visible, .rel.show { color: var(--seal); background: var(--raise); }
-.rel-tip { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); width: max-content; max-width: min(260px, 70vw); padding: 6px 9px; background: var(--ink); color: var(--paper); font-family: var(--read, inherit); font-size: 0.78rem; font-weight: 400; line-height: 1.35; white-space: normal; text-align: left; border-radius: 4px; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.12s; z-index: 5; }
-.rel:focus-visible .rel-tip, .rel.show .rel-tip { opacity: 1; visibility: visible; }
-@media (hover: hover) { .rel:hover .rel-tip { opacity: 1; visibility: visible; } }
-.entry-rel .rel:first-child .rel-tip { left: 0; transform: none; }
+.rel-tip { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(calc(-50% + var(--dx, 0px))); width: max-content; max-width: min(260px, 70vw); padding: 6px 9px; background: var(--ink); color: var(--paper); font-family: var(--read, inherit); font-size: 0.78rem; font-weight: 400; line-height: 1.35; white-space: normal; text-align: left; border-radius: 4px; pointer-events: none; display: none; z-index: 5; }
+.rel:focus-visible .rel-tip, .rel.show .rel-tip { display: block; }
+@media (hover: hover) { .rel:hover .rel-tip { display: block; } }
+.entry-rel .rel:first-child .rel-tip { left: 0; transform: translateX(var(--dx, 0px)); }
 
 .soon { border: 1px dashed var(--rule); background: var(--raise); padding: 44px 24px; text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center; }
 
@@ -664,13 +664,28 @@ function start(saved) {
         '<span class="rel-tip" aria-hidden="true">' + escHtml(r.label) + '</span></a>';
     }).join('') + '</span>';
   }
+  // Keep a showing label inside the screen: shift it left or right if it would run off an edge.
+  function placeTip(a) {
+    var t = a && a.querySelector('.rel-tip');
+    if (!t) return;
+    t.style.setProperty('--dx', '0px');
+    var r = t.getBoundingClientRect();
+    if (!r.width) return;
+    var vw = document.documentElement.clientWidth, m = 8, dx = 0;
+    if (r.right > vw - m) dx = (vw - m) - r.right;
+    if (r.left + dx < m) dx = m - r.left;
+    t.style.setProperty('--dx', dx + 'px');
+  }
+  ['mouseover', 'focusin'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { var a = e.target.closest ? e.target.closest('.rel') : null; if (a) placeTip(a); });
+  });
   // Touch screens have no hover: first tap shows the label, second tap opens the link.
   document.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('.rel') : null;
     var noHover = window.matchMedia && !window.matchMedia('(hover: hover)').matches;
     document.querySelectorAll('.rel.show').forEach(function (x) { if (x !== a) x.classList.remove('show'); });
     if (!a || !noHover) return;
-    if (!a.classList.contains('show')) { e.preventDefault(); a.classList.add('show'); }
+    if (!a.classList.contains('show')) { e.preventDefault(); a.classList.add('show'); placeTip(a); }
   });
 
   function entryHtml(item) {
