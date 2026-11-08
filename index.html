@@ -782,7 +782,7 @@ function start(saved) {
   var moreBtn = document.getElementById('other-more');
   if (moreBtn) { moreBtn.addEventListener('click', function () { otherShown += 10; renderOther(); }); }
   var updMoreBtn = document.getElementById('updates-more');
-  if (updMoreBtn) { updMoreBtn.addEventListener('click', function () { updatesShown += 5; renderFeed(); }); }
+  if (updMoreBtn) { updMoreBtn.addEventListener('click', function () { updatesShown = Infinity; renderFeed(); }); }
   document.querySelectorAll('.filter').forEach(function (f) {
     f.addEventListener('click', function () {
       document.querySelectorAll('.filter').forEach(function (o) { o.setAttribute('aria-pressed', 'false'); });
