@@ -655,13 +655,16 @@ function start(saved) {
     if (/\.pdf([?#]|$)/i.test(url)) return 'doc';
     return 'link';
   }
+  // Used when a related link is pasted on its own, without "Label |" in front.
+  var REL_DEFAULT = { video: 'Watch the video', explainer: 'What does this mean?', doc: 'Read the document (PDF)', link: 'Related link' };
   function relHtml(related) {
     if (!related || !related.length) return '';
     return '<span class="entry-rel">' + related.map(function (r) {
-      var own = relKind(r.url) === 'explainer';
-      return '<a class="rel" href="' + escAttr(r.url) + '" aria-label="' + escAttr(r.label) + '"' +
-        (own ? '' : ' target="_blank" rel="noopener"') + '>' + REL_ICON[relKind(r.url)] +
-        '<span class="rel-tip" aria-hidden="true">' + escHtml(r.label) + '</span></a>';
+      var kind = relKind(r.url), own = kind === 'explainer';
+      var label = r.label || REL_DEFAULT[kind];
+      return '<a class="rel" href="' + escAttr(r.url) + '" aria-label="' + escAttr(label) + '"' +
+        (own ? '' : ' target="_blank" rel="noopener"') + '>' + REL_ICON[kind] +
+        '<span class="rel-tip" aria-hidden="true">' + escHtml(label) + '</span></a>';
     }).join('') + '</span>';
   }
   // Keep a showing label inside the screen: shift it left or right if it would run off an edge.

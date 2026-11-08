@@ -80,18 +80,18 @@ export async function onRequest(context) {
   }
 }
 
-// "Related links" is a text column, one link per line: "Label | https://...".
-// Only http(s) links with a label are passed on; anything else is dropped.
+// "Related links" is a text column, one link per line: "Label | https://..."
+// or just "https://..." (the website then shows a default label for that kind of link).
+// Only http(s) links are passed on; anything else is dropped.
 function parseRelated(richText) {
   if (!Array.isArray(richText) || richText.length === 0) return [];
   const text = richText.map((t) => t.plain_text || '').join('');
   const out = [];
   for (const line of text.split(/\r?\n/)) {
     const bar = line.lastIndexOf('|');
-    if (bar < 0) continue;
-    const label = line.slice(0, bar).trim();
-    const url = line.slice(bar + 1).trim();
-    if (!label || !/^https?:\/\/\S+$/i.test(url)) continue;
+    const label = bar < 0 ? '' : line.slice(0, bar).trim();
+    const url = (bar < 0 ? line : line.slice(bar + 1)).trim();
+    if (!/^https?:\/\/\S+$/i.test(url)) continue;
     out.push({ label: label.slice(0, 200), url });
     if (out.length >= 6) break;
   }
